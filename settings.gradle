@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':mediator_data', ':mediator_domain', ':mediator_presentation', ':mediator_device'
 rootProject.name='Mediator'
