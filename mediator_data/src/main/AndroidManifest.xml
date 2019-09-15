@@ -1,1 +1,5 @@
-<manifest package="company.surious.mediator_data" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="company.surious.mediator_data">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+</manifest>

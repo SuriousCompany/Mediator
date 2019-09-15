@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1033855855411",
+    "firebase_url": "https://mediator-acde1.firebaseio.com",
+    "project_id": "mediator-acde1",
+    "storage_bucket": "mediator-acde1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033855855411:android:68042d83a42dd489e4ec46",
+        "android_client_info": {
+          "package_name": "company.surious.mediator_presentation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033855855411-aatki8mjmp0nhnfb8u41p4j311q4q1ct.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "company.surious.mediator_presentation",
+            "certificate_hash": "3c358fd329bab7e160b852d0cb493d1293f78d8f"
+          }
+        },
+        {
+          "client_id": "1033855855411-fca20ah46n1ldvlc76h4hkrc5sogs6v8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwjpeNwefpa-C3QdNIeSekzSqBsiEdHB0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033855855411-fca20ah46n1ldvlc76h4hkrc5sogs6v8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
