@@ -28,7 +28,7 @@ android {
 
 dependencies {
     implementation "com.google.firebase:firebase-auth:$firebaseAuthVersion"
-    implementation "com.google.android.gms:play-services-auth:$playServicesAuthVersion"
+    api "com.google.android.gms:play-services-auth:$playServicesAuthVersion"
     implementation "com.google.firebase:firebase-messaging:$firebaseMessagingVersion"
     implementation "com.google.firebase:firebase-storage:$firebaseStorageVersion"
     implementation "com.google.firebase:firebase-firestore:$firebaseFirestoreVersion"

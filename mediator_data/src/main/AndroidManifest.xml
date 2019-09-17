@@ -2,4 +2,5 @@
     package="company.surious.mediator_data">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 </manifest>
