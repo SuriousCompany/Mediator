@@ -27,12 +27,13 @@ ext {
     lifecycleVersion = "2.1.0"
     constraintlayoutVersion = "1.1.3"
     navigationVersion = "2.1.0"
-    firebaseAuthVersion = "19.0.0"
+    firebaseAuthVersion = "19.1.0"
     playServicesAuthVersion = "17.0.0"
     firebaseMessagingVersion = "20.0.0"
-    firebaseStorageVersion = "19.0.1"
+    firebaseStorageVersion = "19.1.0"
     firebaseFirestoreVersion = "21.1.1"
     multidexVersion = "1.0.3"
+    daggerVersion = "2.24"
 
     compileSdkVersion = 28
     minSdkVersion = 16

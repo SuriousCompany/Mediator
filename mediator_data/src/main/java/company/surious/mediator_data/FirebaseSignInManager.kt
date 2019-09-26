@@ -4,9 +4,10 @@ import android.content.Context
 import android.content.Intent
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import company.surious.mediator_domain.SignInManager
+import company.surious.mediator_domain.managers.SignInManager
 
-class FirebaseSignInManager(private val context: Context) : SignInManager {
+class FirebaseSignInManager(private val context: Context) :
+    SignInManager {
 
     private val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestEmail()
