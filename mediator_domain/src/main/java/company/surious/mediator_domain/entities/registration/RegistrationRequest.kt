@@ -1,9 +1,9 @@
 package company.surious.mediator_domain.entities.registration
 
-import company.surious.mediator_domain.entities.Identifiable
+import company.surious.mediator_domain.entities.interfaces.Identifiable
 
 open class RegistrationRequest(
-    override val id: Long,
-    open val status: RegistrationRequestStatus,
-    open val userId: Long
+    override var id: Long = -1,
+    open var status: RegistrationRequestStatus = RegistrationRequestStatus.CREATED,
+    open val userId: Long = -1
 ) : Identifiable
