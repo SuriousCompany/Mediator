@@ -32,9 +32,10 @@ dependencies {
 
     implementation "com.google.firebase:firebase-auth:$firebaseAuthVersion"
     api "com.google.android.gms:play-services-auth:$playServicesAuthVersion"
+    implementation "com.google.firebase:firebase-core:$firebaseCoreVersion"
     implementation "com.google.firebase:firebase-messaging:$firebaseMessagingVersion"
     implementation "com.google.firebase:firebase-storage:$firebaseStorageVersion"
-    implementation "com.google.firebase:firebase-firestore:$firebaseFirestoreVersion"
+    api "com.google.firebase:firebase-firestore:$firebaseFirestoreVersion"
 
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test:runner:$testRunnerVersion"

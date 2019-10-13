@@ -54,6 +54,7 @@ class MainActivity : DaggerAppCompatActivity() {
         try {
             val account = completedTask.getResult(ApiException::class.java)
             Toast.makeText(this, "signed as ${account!!.displayName}", Toast.LENGTH_SHORT).show()
+
         } catch (e: ApiException) {
             Logger.e("signIn", e)
         }

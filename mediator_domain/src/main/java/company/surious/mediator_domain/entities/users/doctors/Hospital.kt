@@ -10,6 +10,7 @@ import company.surious.mediator_domain.entities.utils.UpdatableEntityUtils
 
 open class Hospital(
     override var id: Long = -1,
+    var cityId: Long = -1,
     override var placeId: String = "",
     var location: Location = Location(),
     override var name: String = "",
@@ -23,25 +24,28 @@ open class Hospital(
     override fun isChanged(anotherVersion: Hospital): Boolean {
         UpdatableEntityUtils.checkSameEntity(this, anotherVersion.id)
         return placeId != anotherVersion.placeId
+                || cityId != anotherVersion.cityId
+                || location.isChanged(anotherVersion.location)
                 || name != anotherVersion.name
                 || nameRu != anotherVersion.nameRu
                 || nameUa != anotherVersion.nameUa
                 || description != anotherVersion.description
                 || descriptionRu != anotherVersion.descriptionRu
                 || descriptionUa != anotherVersion.descriptionUa
-                || location.isChanged(anotherVersion.location)
+
     }
 
     override fun update(anotherVersion: Hospital) {
         UpdatableEntityUtils.checkSameEntity(this, anotherVersion.id)
         placeId = anotherVersion.placeId
+        cityId = anotherVersion.cityId
+        location.update(anotherVersion.location)
         name = anotherVersion.name
         nameRu = anotherVersion.nameRu
         nameUa = anotherVersion.nameUa
         description = anotherVersion.description
         descriptionRu = anotherVersion.descriptionRu
         descriptionUa = anotherVersion.descriptionUa
-        location.update(anotherVersion.location)
     }
 
     override fun equals(other: Any?): Boolean {
@@ -57,6 +61,7 @@ open class Hospital(
 
     constructor(source: Parcel) : this(
         source.readLong(),
+        source.readLong(),
         source.readString()!!,
         source.readParcelable<Location>(Location::class.java.classLoader)!!,
         source.readString()!!,
@@ -71,6 +76,7 @@ open class Hospital(
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
         writeLong(id)
+        writeLong(cityId)
         writeString(placeId)
         writeParcelable(location, 0)
         writeString(name)
