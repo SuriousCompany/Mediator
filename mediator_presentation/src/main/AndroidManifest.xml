@@ -4,18 +4,27 @@
     package="company.surious.mediator_presentation">
 
     <application
-        android:fullBackupContent="true"
+        android:name=".core.MediatorApplication"
         android:allowBackup="true"
-        tools:ignore="GoogleAppIndexingWarning"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".core.MediatorApplication"
-        android:theme="@style/AppTheme">
-        <activity android:name=".ui.components.activities.main.MainActivity">
+        android:theme="@style/AppTheme.NoToolbar"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".ui.components.activities.PatientSignUpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.components.activities.DoctorSignUpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.components.activities.main.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

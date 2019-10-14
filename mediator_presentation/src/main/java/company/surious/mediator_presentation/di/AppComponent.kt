@@ -2,6 +2,7 @@ package company.surious.mediator_presentation.di
 
 import android.app.Application
 import company.surious.mediator_data.di.DataManagersModule
+import company.surious.mediator_device.DeviceModule
 import company.surious.mediator_presentation.core.MediatorApplication
 import dagger.BindsInstance
 import dagger.Component
@@ -12,7 +13,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [AndroidInjectionModule::class, AppModule::class, DataManagersModule::class,
-        ActivityModule::class]
+        ActivityModule::class, DeviceModule::class]
 )
 interface AppComponent {
 

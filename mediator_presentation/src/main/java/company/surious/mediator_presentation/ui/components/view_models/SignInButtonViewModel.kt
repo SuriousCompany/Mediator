@@ -20,17 +20,22 @@ class SignInButtonViewModel @Inject constructor(
     private val sendHospitalRegistrationRequestUseCase: SendHospitalRegistrationRequestUseCase
 ) : ViewModel() {
 
-    var showSignInActivityFunction: ((signInIntent: Intent) -> Unit)? = null
-    var showHospitalRegisteredToastFunction: ((hospital: HospitalRegistrationRequest) -> Unit)? =
-        null
+    var signedInCallback: (() -> Unit)? = null
+    var showSignInActivityFunction: ((intent: Intent) -> Unit)? = null
     var showErrorMessagesFunction: ((error: Throwable) -> Unit)? = null
 
-    fun onSignInButtonClick() {
+    init {
         if (signInManager.isSigned()) {
-            sendRegistrationRequest()
-        } else {
-            showSignInActivityFunction?.invoke(signInManager.getSignInIntent())
+            signedInCallback?.invoke()
         }
+    }
+
+    fun onSignInButtonClick() {
+        showSignInActivityFunction?.invoke(signInManager.getSignInIntent())
+    }
+
+    fun onSignedInWithGoogle() {
+        //TODO make server request
     }
 
     private fun sendRegistrationRequest() {
@@ -55,7 +60,7 @@ class SignInButtonViewModel @Inject constructor(
             hospitalRegistrationRequest
         ).subscribe(
             {
-                showHospitalRegisteredToastFunction?.invoke(hospitalRegistrationRequest)
+                //showHospitalRegisteredToastFunction?.invoke(hospitalRegistrationRequest)
                 Logger.logThread("view model")
             },
             {

@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="signInButtonViewModel"
-            type="company.surious.mediator_presentation.ui.components.view_models.SignInButtonViewModel" />
+            name="eventsHandler"
+            type="company.surious.mediator_presentation.ui.components.activities.main.MainActivity.MainActivityViewEventsHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,23 +15,38 @@
         android:layout_height="match_parent"
         tools:context=".ui.components.activities.main.MainActivity">
 
+        <Button
+            android:id="@+id/signUpAsPatientButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:onClick="@{() -> eventsHandler.onPatientSignUpButtonClicked()}"
+            android:text="@string/sign_up_as_patient"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/signUpAsDoctorButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/signUpAsDoctorButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:onClick="@{() -> eventsHandler.onDoctorSignUpButtonClicked()}"
+            android:text="@string/sign_up_as_doctor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/signUpAsPatientButton"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <com.google.android.gms.common.SignInButton
             android:id="@+id/signInButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:onClick="@{() -> signInButtonViewModel.onSignInButtonClick()}"
+            android:layout_marginBottom="16dp"
+            android:onClick="@{() -> eventsHandler.onSignInButtonClicked()}"
+            android:translationZ="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

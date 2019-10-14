@@ -2,7 +2,6 @@ package company.surious.mediator_presentation.ui.components.activities.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -13,6 +12,8 @@ import company.surious.mediator_device.Logger
 import company.surious.mediator_presentation.R
 import company.surious.mediator_presentation.databinding.ActivityMainBinding
 import company.surious.mediator_presentation.ui.base.ViewModelFactory
+import company.surious.mediator_presentation.ui.components.activities.DoctorSignUpActivity
+import company.surious.mediator_presentation.ui.components.activities.PatientSignUpActivity
 import company.surious.mediator_presentation.ui.components.view_models.SignInButtonViewModel
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
@@ -28,18 +29,16 @@ class MainActivity : DaggerAppCompatActivity() {
     lateinit var viewModelFactory: ViewModelFactory
     lateinit var signInButtonViewModel: SignInButtonViewModel
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityMainBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
-        val viewModel =
+        signInButtonViewModel =
             ViewModelProviders.of(this, viewModelFactory)[SignInButtonViewModel::class.java]
-        viewModel.showSignInActivityFunction = {
-            startSignInActivity(it)
-        }
-        binding.signInButtonViewModel = viewModel
+        signInButtonViewModel.showSignInActivityFunction = { startSignInActivity(it) }
+
+        binding.eventsHandler = MainActivityViewEventsHandler()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -53,8 +52,7 @@ class MainActivity : DaggerAppCompatActivity() {
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
-            Toast.makeText(this, "signed as ${account!!.displayName}", Toast.LENGTH_SHORT).show()
-
+            signInButtonViewModel.onSignedInWithGoogle()
         } catch (e: ApiException) {
             Logger.e("signIn", e)
         }
@@ -66,5 +64,17 @@ class MainActivity : DaggerAppCompatActivity() {
             signInActivityIntent,
             SIGN_IN_REQUEST_CODE
         )
+    }
+
+    inner class MainActivityViewEventsHandler {
+        fun onSignInButtonClicked() = signInButtonViewModel.onSignInButtonClick()
+
+
+        fun onDoctorSignUpButtonClicked() =
+            startActivity(Intent(this@MainActivity, DoctorSignUpActivity::class.java))
+
+        fun onPatientSignUpButtonClicked() =
+            startActivity(Intent(this@MainActivity, PatientSignUpActivity::class.java))
+
     }
 }
