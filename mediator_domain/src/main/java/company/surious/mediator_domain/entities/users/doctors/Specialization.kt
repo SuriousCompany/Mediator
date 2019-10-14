@@ -10,14 +10,20 @@ class Specialization(
     override var id: Long = -1,
     override var name: String = "",
     override var nameRu: String? = null,
-    override var nameUa: String? = null
-) : UpdatableEntity<Specialization>, Nameable, Parcelable {
+    override var nameUa: String? = null,
+    var description: String = "",
+    var descriptionRu: String = "",
+    var descriptionUa: String = ""
 
+) : UpdatableEntity<Specialization>, Nameable, Parcelable {
     override fun isChanged(anotherVersion: Specialization): Boolean {
         UpdatableEntityUtils.checkSameEntity(this, anotherVersion.id)
         return name != anotherVersion.name
                 || nameRu != anotherVersion.nameRu
                 || nameUa != anotherVersion.nameUa
+                || description != anotherVersion.description
+                || descriptionRu != anotherVersion.descriptionRu
+                || descriptionUa != anotherVersion.descriptionUa
     }
 
     override fun update(anotherVersion: Specialization) {
@@ -25,6 +31,9 @@ class Specialization(
         name = anotherVersion.name
         nameRu = anotherVersion.nameRu
         nameUa = anotherVersion.nameUa
+        description = anotherVersion.description
+        descriptionRu = anotherVersion.descriptionRu
+        descriptionUa = anotherVersion.descriptionUa
     }
 
     override fun equals(other: Any?): Boolean {
@@ -42,7 +51,10 @@ class Specialization(
         source.readLong(),
         source.readString()!!,
         source.readString(),
-        source.readString()
+        source.readString(),
+        source.readString()!!,
+        source.readString()!!,
+        source.readString()!!
     )
 
     override fun describeContents() = 0
@@ -52,6 +64,9 @@ class Specialization(
         writeString(name)
         writeString(nameRu)
         writeString(nameUa)
+        writeString(description)
+        writeString(descriptionRu)
+        writeString(descriptionUa)
     }
 
     companion object {
