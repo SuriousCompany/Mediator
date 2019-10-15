@@ -9,15 +9,18 @@ import company.surious.mediator_domain.entities.utils.updateInnerObject
 
 class CurrentUser(
     override var id: Long = -1,
-    var currentUserType: CurrentUserType = CurrentUserType.PATIENT,
+    var currentUserType: CurrentUserType = CurrentUserType.UNDEFINED,
     var currentUserStatus: CurrentUserStatus = CurrentUserStatus.SIGNED_WITH_GOOGLE,
-    var doctorData: Doctor? = null
+    var doctorData: Doctor? = null,
+    var uId: String = ""
     //TODO add patient model
 ) : UpdatableEntity<CurrentUser>, Parcelable {
+
     override fun isChanged(anotherVersion: CurrentUser): Boolean =
         currentUserType != anotherVersion.currentUserType
                 || currentUserStatus != anotherVersion.currentUserStatus
                 || isInnerObjectChanged(anotherVersion.doctorData, doctorData)
+                || uId != anotherVersion.uId
 
     override fun update(anotherVersion: CurrentUser) {
         currentUserType = anotherVersion.currentUserType
@@ -27,13 +30,15 @@ class CurrentUser(
             doctorData,
             { doctorData = null },
             { doctorData = anotherVersion.doctorData })
+        uId = anotherVersion.uId
     }
 
     constructor(source: Parcel) : this(
         source.readLong(),
         CurrentUserType.values()[source.readInt()],
         CurrentUserStatus.values()[source.readInt()],
-        source.readParcelable<Doctor>(Doctor::class.java.classLoader)
+        source.readParcelable<Doctor>(Doctor::class.java.classLoader),
+        source.readString()!!
     )
 
     override fun describeContents() = 0
@@ -43,6 +48,7 @@ class CurrentUser(
         writeInt(currentUserType.ordinal)
         writeInt(currentUserStatus.ordinal)
         writeParcelable(doctorData, 0)
+        writeString(uId)
     }
 
     companion object {

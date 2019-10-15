@@ -15,6 +15,7 @@ import company.surious.mediator_presentation.ui.base.ViewModelFactory
 import company.surious.mediator_presentation.ui.components.activities.DoctorSignUpActivity
 import company.surious.mediator_presentation.ui.components.activities.PatientSignUpActivity
 import company.surious.mediator_presentation.ui.components.view_models.SignInButtonViewModel
+import company.surious.mediator_presentation.ui.utils.extensions.showNotImplementedToast
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
@@ -37,7 +38,7 @@ class MainActivity : DaggerAppCompatActivity() {
         signInButtonViewModel =
             ViewModelProviders.of(this, viewModelFactory)[SignInButtonViewModel::class.java]
         signInButtonViewModel.showSignInActivityFunction = { startSignInActivity(it) }
-
+        signInButtonViewModel.signedInCallback = { showNotImplementedToast() }
         binding.eventsHandler = MainActivityViewEventsHandler()
     }
 
@@ -52,7 +53,7 @@ class MainActivity : DaggerAppCompatActivity() {
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
-            signInButtonViewModel.onSignedInWithGoogle()
+            signInButtonViewModel.onSignedInWithGoogle(account!!)
         } catch (e: ApiException) {
             Logger.e("signIn", e)
         }

@@ -4,4 +4,7 @@
     <string name="sign_up_as_doctor">Sign up as doctor</string>
     <string name="patient_sign_up">Patient sign up</string>
     <string name="doctor_sign_up">Doctor sign up</string>
+    <string name="not_implemented_yet">Not implemented yet</string>
+    <string name="i_work_in_a_state_hospital">I work in a state hospital</string>
+    <string name="i_work_as_a_self_employed_doctor">I work as a self employed doctor</string>
 </resources>

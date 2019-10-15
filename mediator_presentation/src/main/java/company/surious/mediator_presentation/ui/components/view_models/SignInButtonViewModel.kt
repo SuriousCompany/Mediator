@@ -2,21 +2,13 @@ package company.surious.mediator_presentation.ui.components.view_models
 
 import android.content.Intent
 import androidx.lifecycle.ViewModel
-import company.surious.mediator_domain.Logger
-import company.surious.mediator_domain.entities.location.Location
-import company.surious.mediator_domain.entities.registration.DoctorRegistrationRequest
-import company.surious.mediator_domain.entities.registration.HospitalRegistrationRequest
-import company.surious.mediator_domain.entities.registration.RegistrationRequestStatus
-import company.surious.mediator_domain.entities.users.doctors.Doctor
-import company.surious.mediator_domain.entities.users.doctors.DoctorType
-import company.surious.mediator_domain.entities.users.doctors.Hospital
-import company.surious.mediator_domain.entities.users.doctors.Specialization
-import company.surious.mediator_domain.managers.SignInManager
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import company.surious.mediator_domain.managers.AuthManager
 import company.surious.mediator_domain.use_cases.registration.SendHospitalRegistrationRequestUseCase
 import javax.inject.Inject
 
 class SignInButtonViewModel @Inject constructor(
-    private val signInManager: SignInManager,
+    private val authManager: AuthManager,
     private val sendHospitalRegistrationRequestUseCase: SendHospitalRegistrationRequestUseCase
 ) : ViewModel() {
 
@@ -25,20 +17,20 @@ class SignInButtonViewModel @Inject constructor(
     var showErrorMessagesFunction: ((error: Throwable) -> Unit)? = null
 
     init {
-        if (signInManager.isSigned()) {
+        if (authManager.isSigned()) {
             signedInCallback?.invoke()
         }
     }
 
     fun onSignInButtonClick() {
-        showSignInActivityFunction?.invoke(signInManager.getSignInIntent())
+        showSignInActivityFunction?.invoke(authManager.getSignInIntent())
     }
 
-    fun onSignedInWithGoogle() {
-        //TODO make server request
+    fun onSignedInWithGoogle(googleAccount: GoogleSignInAccount) {
+        authManager.authWithGoogle(googleAccount.idToken!!).subscribe()
     }
 
-    private fun sendRegistrationRequest() {
+    /*private fun sendRegistrationRequest() {
         val doctor = generateDoctor()
         val hospitalRegistrationRequest =
             HospitalRegistrationRequest(
@@ -131,5 +123,5 @@ class SignInButtonViewModel @Inject constructor(
             "Ass diver",
             "Жопный врач",
             "Дупний лiкар"
-        )
+        )*/
 }

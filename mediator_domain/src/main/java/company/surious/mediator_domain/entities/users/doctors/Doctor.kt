@@ -11,11 +11,14 @@ import company.surious.mediator_domain.entities.utils.updateInnerObject
 
 class Doctor(
     override var id: Long = -1,
-    override var googleAuthId: String = "",
-    override var displayName: String = "",
+    override var uId: String = "",
     override var email: String = "",
     override var familyName: String = "",
+    override var familyNameRu: String? = null,
+    override var familyNameUa: String? = null,
     override var givenName: String = "",
+    override var givenNameRu: String? = null,
+    override var givenNameUa: String? = null,
     override var photoUrl: String? = null,
     override var blocked: Boolean = false,
     var category: String = "",
@@ -26,12 +29,6 @@ class Doctor(
     var rating: Float? = 0f,
     var hospital: Hospital? = null,
     var patientsReceptionSite: PatientsReceptionSite? = null,
-    override var displayNameRu: String? = null,
-    override var displayNameUa: String? = null,
-    override var familyNameRu: String? = null,
-    override var familyNameUa: String? = null,
-    override var givenNameRu: String? = null,
-    override var givenNameUa: String? = null,
     var educationRu: String? = null,
     var educationUa: String? = null,
     var aboutMe: String? = null,
@@ -49,26 +46,22 @@ class Doctor(
     var scientificAndPracticalActivityUa: String? = null
 ) : SignedUser(
     id,
-    googleAuthId,
+    uId,
     email,
-    displayName,
-    displayNameRu,
-    displayNameUa,
+    familyName,
     familyNameRu,
     familyNameUa,
     givenName,
     givenNameRu,
     givenNameUa,
-    familyName,
     photoUrl,
     blocked
 ), UpdatableEntity<Doctor>, Parcelable {
 
     override fun isChanged(anotherVersion: Doctor): Boolean {
         UpdatableEntityUtils.checkSameEntity(this, anotherVersion.id)
-        return googleAuthId != anotherVersion.googleAuthId
+        return uId != anotherVersion.uId
                 || email != anotherVersion.email
-                || displayName != anotherVersion.displayName
                 || familyName != anotherVersion.familyName
                 || givenName != anotherVersion.givenName
                 || category != anotherVersion.category
@@ -83,8 +76,6 @@ class Doctor(
                 || rating != anotherVersion.rating
                 || isInnerObjectChanged(anotherVersion.hospital, hospital)
                 || isInnerObjectChanged(anotherVersion.patientsReceptionSite, patientsReceptionSite)
-                || displayNameRu != anotherVersion.displayNameRu
-                || displayNameUa != anotherVersion.displayNameUa
                 || familyNameRu != anotherVersion.familyNameRu
                 || familyNameUa != anotherVersion.familyNameUa
                 || givenNameRu != anotherVersion.givenNameRu
@@ -109,9 +100,8 @@ class Doctor(
 
     override fun update(anotherVersion: Doctor) {
         UpdatableEntityUtils.checkSameEntity(this, anotherVersion.id)
-        googleAuthId = anotherVersion.googleAuthId
+        uId = anotherVersion.uId
         email = anotherVersion.email
-        displayName = anotherVersion.displayName
         familyName = anotherVersion.familyName
         givenName = anotherVersion.givenName
         category = anotherVersion.category
@@ -130,8 +120,6 @@ class Doctor(
             patientsReceptionSite,
             { patientsReceptionSite = null },
             { patientsReceptionSite = anotherVersion.patientsReceptionSite })
-        displayNameRu = anotherVersion.displayNameRu
-        displayNameUa = anotherVersion.displayNameUa
         familyNameRu = anotherVersion.familyNameRu
         familyNameUa = anotherVersion.familyNameUa
         givenNameRu = anotherVersion.givenNameRu
@@ -174,8 +162,11 @@ class Doctor(
         source.readString()!!,
         source.readString()!!,
         source.readString()!!,
+        source.readString(),
+        source.readString(),
         source.readString()!!,
-        source.readString()!!,
+        source.readString(),
+        source.readString(),
         source.readString(),
         1 == source.readInt(),
         source.readString()!!,
@@ -186,12 +177,6 @@ class Doctor(
         source.readValue(Float::class.java.classLoader) as Float?,
         source.readParcelable<Hospital>(Hospital::class.java.classLoader),
         source.readParcelable<PatientsReceptionSite>(PatientsReceptionSite::class.java.classLoader),
-        source.readString(),
-        source.readString(),
-        source.readString(),
-        source.readString(),
-        source.readString(),
-        source.readString(),
         source.readString(),
         source.readString(),
         source.readString(),
@@ -213,11 +198,14 @@ class Doctor(
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
         writeLong(id)
-        writeString(googleAuthId)
-        writeString(displayName)
+        writeString(uId)
         writeString(email)
         writeString(familyName)
+        writeString(familyNameRu)
+        writeString(familyNameUa)
         writeString(givenName)
+        writeString(givenNameRu)
+        writeString(givenNameUa)
         writeString(photoUrl)
         writeInt((if (blocked) 1 else 0))
         writeString(category)
@@ -228,12 +216,6 @@ class Doctor(
         writeValue(rating)
         writeParcelable(hospital, 0)
         writeParcelable(patientsReceptionSite, 0)
-        writeString(displayNameRu)
-        writeString(displayNameUa)
-        writeString(familyNameRu)
-        writeString(familyNameUa)
-        writeString(givenNameRu)
-        writeString(givenNameUa)
         writeString(educationRu)
         writeString(educationUa)
         writeString(aboutMe)
