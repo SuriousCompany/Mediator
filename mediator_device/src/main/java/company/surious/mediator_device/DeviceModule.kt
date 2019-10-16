@@ -1,6 +1,7 @@
 package company.surious.mediator_device
 
 import android.content.Context
+import company.surious.mediator_domain.managers.PreferencesManager
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -10,5 +11,6 @@ object DeviceModule {
     @Provides
     @Singleton
     @JvmStatic
-    fun providePrefs(context: Context): Prefs = Prefs(context)
+    fun providePreferencesManager(context: Context): PreferencesManager =
+        SharedPreferencesManager(context)
 }

@@ -10,16 +10,27 @@ import company.surious.mediator_domain.entities.utils.setAll
 import company.surious.mediator_domain.entities.utils.updateInnerObject
 
 class Doctor(
+    @Transient
     override var id: Long = -1,
+    @Transient
     override var uId: String = "",
+    @Transient
     override var email: String = "",
+    @Transient
     override var familyName: String = "",
+    @Transient
     override var familyNameRu: String? = null,
+    @Transient
     override var familyNameUa: String? = null,
+    @Transient
     override var givenName: String = "",
+    @Transient
     override var givenNameRu: String? = null,
+    @Transient
     override var givenNameUa: String? = null,
+    @Transient
     override var photoUrl: String? = null,
+    @Transient
     override var blocked: Boolean = false,
     var category: String = "",
     var specialization: Specialization = Specialization(),

@@ -9,7 +9,7 @@ import javax.inject.Inject
 class FirestoreUsersRepository @Inject constructor(firebaseFirestore: FirebaseFirestore) :
     UsersRepository {
 
-    override fun getSignedUser(uId: String): Maybe<SignedUser> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getSignedUser(uId: String): Maybe<SignedUser> =
+        Maybe.empty()
+
 }

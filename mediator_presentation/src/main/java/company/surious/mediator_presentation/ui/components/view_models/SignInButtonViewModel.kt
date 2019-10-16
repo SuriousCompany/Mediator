@@ -4,11 +4,13 @@ import android.content.Intent
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import company.surious.mediator_domain.managers.AuthManager
+import company.surious.mediator_domain.use_cases.registration.AuthUseCase
 import company.surious.mediator_domain.use_cases.registration.SendHospitalRegistrationRequestUseCase
 import javax.inject.Inject
 
 class SignInButtonViewModel @Inject constructor(
     private val authManager: AuthManager,
+    private val authUseCase: AuthUseCase,
     private val sendHospitalRegistrationRequestUseCase: SendHospitalRegistrationRequestUseCase
 ) : ViewModel() {
 
@@ -22,12 +24,19 @@ class SignInButtonViewModel @Inject constructor(
         }
     }
 
+
     fun onSignInButtonClick() {
         showSignInActivityFunction?.invoke(authManager.getSignInIntent())
     }
 
     fun onSignedInWithGoogle(googleAccount: GoogleSignInAccount) {
-        authManager.authWithGoogle(googleAccount.idToken!!).subscribe()
+        authUseCase.execute(googleAccount.idToken!!).subscribe(
+            { user ->
+
+            },
+            { error ->
+                
+            })
     }
 
     /*private fun sendRegistrationRequest() {
