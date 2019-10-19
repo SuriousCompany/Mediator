@@ -33,7 +33,7 @@ class Doctor(
     @Transient
     override var blocked: Boolean = false,
     var category: String = "",
-    var specialization: Specialization = Specialization(),
+    var specializations: ArrayList<Specialization> = ArrayList(),
     var education: String = "",
     val workExperience: ArrayList<WorkExperience> = ArrayList(),
     var type: DoctorType = DoctorType.SELF_EMPLOYED,
@@ -76,7 +76,11 @@ class Doctor(
                 || familyName != anotherVersion.familyName
                 || givenName != anotherVersion.givenName
                 || category != anotherVersion.category
-                || specialization.isChanged(anotherVersion.specialization)
+                ||
+                UpdatableEntityUtils.isListContentChanged(
+                    specializations,
+                    anotherVersion.specializations
+                )
                 || education != anotherVersion.education
                 ||
                 UpdatableEntityUtils.isListContentChanged(
@@ -116,7 +120,7 @@ class Doctor(
         familyName = anotherVersion.familyName
         givenName = anotherVersion.givenName
         category = anotherVersion.category
-        specialization.update(anotherVersion.specialization)
+        specializations.setAll(anotherVersion.specializations)
         education = anotherVersion.education
         workExperience.setAll(anotherVersion.workExperience)
         type = anotherVersion.type
@@ -181,7 +185,7 @@ class Doctor(
         source.readString(),
         1 == source.readInt(),
         source.readString()!!,
-        source.readParcelable<Specialization>(Specialization::class.java.classLoader)!!,
+        source.createTypedArrayList(Specialization.CREATOR)!!,
         source.readString()!!,
         source.createTypedArrayList(WorkExperience.CREATOR)!!,
         DoctorType.values()[source.readInt()],
@@ -220,7 +224,7 @@ class Doctor(
         writeString(photoUrl)
         writeInt((if (blocked) 1 else 0))
         writeString(category)
-        writeParcelable(specialization, 0)
+        writeTypedList(specializations)
         writeString(education)
         writeTypedList(workExperience)
         writeInt(type.ordinal)
