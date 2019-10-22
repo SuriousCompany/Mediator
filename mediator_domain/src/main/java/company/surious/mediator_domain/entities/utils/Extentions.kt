@@ -22,10 +22,10 @@ fun <T, F : VersionComparable<F>> VersionComparable<T>.isInnerObjectChanged(
 
 fun <T> MutableCollection<T>.setAll(anotherVersionList: Collection<T>) {
     clear()
-    addAll(anotherVersionList)
+    addAll(ArrayList(anotherVersionList))
 }
 
 fun <T> ArrayList<T>.setAll(anotherVersionList: Collection<T>) {
     clear()
-    addAll(anotherVersionList)
+    addAll(ArrayList(anotherVersionList))
 }

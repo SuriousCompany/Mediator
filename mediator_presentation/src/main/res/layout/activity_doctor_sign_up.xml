@@ -5,7 +5,7 @@
 
         <variable
             name="eventsHandler"
-            type="company.surious.mediator_presentation.ui.components.activities.DoctorSignUpActivity.DoctorSignUpActivityEventsHandler" />
+            type="company.surious.mediator_presentation.ui.components.activities.registration.DoctorSignUpActivity.DoctorSignUpActivityEventsHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -13,7 +13,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.components.activities.DoctorSignUpActivity">
+        tools:context=".ui.components.activities.registration.DoctorSignUpActivity">
 
         <Button
             android:id="@+id/iWorkInHospitalButton"

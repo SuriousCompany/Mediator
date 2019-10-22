@@ -1,4 +1,4 @@
-package company.surious.mediator_presentation.ui.components.activities
+package company.surious.mediator_presentation.ui.components.activities.registration
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

@@ -1,10 +1,12 @@
-package company.surious.mediator_presentation.ui.components.activities
+package company.surious.mediator_presentation.ui.components.activities.registration
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import company.surious.mediator_presentation.R
 import company.surious.mediator_presentation.databinding.ActivityDoctorSignUpBinding
+import company.surious.mediator_presentation.ui.components.activities.registration.hospital_doctor.HospitalDoctorSignUpActivity
 import company.surious.mediator_presentation.ui.utils.extensions.showNotImplementedToast
 
 class DoctorSignUpActivity : AppCompatActivity() {
@@ -22,8 +24,12 @@ class DoctorSignUpActivity : AppCompatActivity() {
             showNotImplementedToast()
         }
 
-        fun onHospitalButtonClicked() {
-
-        }
+        fun onHospitalButtonClicked() =
+            startActivity(
+                Intent(
+                    this@DoctorSignUpActivity,
+                    HospitalDoctorSignUpActivity::class.java
+                )
+            )
     }
 }

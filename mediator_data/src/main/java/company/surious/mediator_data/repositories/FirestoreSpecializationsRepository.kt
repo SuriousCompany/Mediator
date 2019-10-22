@@ -38,6 +38,6 @@ class FirestoreSpecializationsRepository @Inject constructor(private val firebas
         when (language) {
             Language.EN -> "name"
             Language.RU -> "nameRu"
-            Language.UK -> "nameUa"
+            Language.UA -> "nameUa"
         }
 }

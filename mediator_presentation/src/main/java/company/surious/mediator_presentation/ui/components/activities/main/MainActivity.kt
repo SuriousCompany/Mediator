@@ -12,10 +12,9 @@ import company.surious.mediator_device.Logger
 import company.surious.mediator_presentation.R
 import company.surious.mediator_presentation.databinding.ActivityMainBinding
 import company.surious.mediator_presentation.ui.base.ViewModelFactory
-import company.surious.mediator_presentation.ui.components.activities.DoctorSignUpActivity
-import company.surious.mediator_presentation.ui.components.activities.PatientSignUpActivity
+import company.surious.mediator_presentation.ui.components.activities.registration.DoctorSignUpActivity
+import company.surious.mediator_presentation.ui.components.activities.registration.PatientSignUpActivity
 import company.surious.mediator_presentation.ui.components.view_models.SignInButtonViewModel
-import company.surious.mediator_presentation.ui.components.view_models.SpecializationsListViewModel
 import company.surious.mediator_presentation.ui.utils.extensions.showNotImplementedToast
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
@@ -30,7 +29,6 @@ class MainActivity : DaggerAppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     lateinit var signInButtonViewModel: SignInButtonViewModel
-    lateinit var specializationsListViewModel: SpecializationsListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +44,6 @@ class MainActivity : DaggerAppCompatActivity() {
             ViewModelProviders.of(this, viewModelFactory)[SignInButtonViewModel::class.java]
         signInButtonViewModel.showSignInActivityFunction = { startSignInActivity(it) }
         signInButtonViewModel.signedInCallback = { showNotImplementedToast() }
-        specializationsListViewModel = ViewModelProviders.of(this, viewModelFactory)[
-                SpecializationsListViewModel::class.java]
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -84,8 +80,6 @@ class MainActivity : DaggerAppCompatActivity() {
 
         fun onPatientSignUpButtonClicked() =
             startActivity(Intent(this@MainActivity, PatientSignUpActivity::class.java))
-
-        fun onRegButtonClicked() = specializationsListViewModel.onRegistrationButtonClick()
 
     }
 }

@@ -13,11 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoToolbar"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ui.components.activities.specializations.SelectSpecializationsActivity"></activity>
         <activity
-            android:name=".ui.components.activities.PatientSignUpActivity"
+            android:name=".ui.components.activities.registration.hospital_doctor.HospitalDoctorSignUpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.components.activities.DoctorSignUpActivity"
+            android:name=".ui.components.activities.registration.PatientSignUpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.components.activities.registration.DoctorSignUpActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.components.activities.main.MainActivity"
