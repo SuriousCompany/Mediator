@@ -5,4 +5,5 @@ object References {
     val REGISTRATION_REQUESTS = "registrationRequests"
     val DOCTORS = "doctors"
     val INDEXES = "indexes"
+    val SPECIALIZATIONS = "specializations"
 }

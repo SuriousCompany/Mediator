@@ -4,7 +4,7 @@ import company.surious.mediator_domain.entities.users.SignedUser
 import company.surious.mediator_domain.entities.users.current_user.CurrentUser
 import company.surious.mediator_domain.managers.AuthManager
 import company.surious.mediator_domain.managers.PreferencesManager
-import company.surious.mediator_domain.managers.UsersRepository
+import company.surious.mediator_domain.repositories.UsersRepository
 import company.surious.mediator_domain.use_cases.base.SingleUseCase
 import io.reactivex.Single
 import javax.inject.Inject

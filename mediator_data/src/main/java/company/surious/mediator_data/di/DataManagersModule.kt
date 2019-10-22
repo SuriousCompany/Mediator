@@ -4,10 +4,12 @@ import android.content.Context
 import com.google.firebase.firestore.FirebaseFirestore
 import company.surious.mediator_data.FirebaseAuthManager
 import company.surious.mediator_data.FirestoreRegistrationManager
+import company.surious.mediator_data.repositories.FirestoreSpecializationsRepository
 import company.surious.mediator_data.repositories.FirestoreUsersRepository
 import company.surious.mediator_domain.managers.AuthManager
 import company.surious.mediator_domain.managers.RegistrationManager
-import company.surious.mediator_domain.managers.UsersRepository
+import company.surious.mediator_domain.repositories.SpecializationsRepository
+import company.surious.mediator_domain.repositories.UsersRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -35,4 +37,10 @@ object DataManagersModule {
     @JvmStatic
     fun provideUsersRepository(firebaseFirestore: FirebaseFirestore): UsersRepository =
         FirestoreUsersRepository(firebaseFirestore)
+
+    @Provides
+    @Singleton
+    @JvmStatic
+    fun provideSpecializationsRepository(firebaseFirestore: FirebaseFirestore): SpecializationsRepository =
+        FirestoreSpecializationsRepository(firebaseFirestore)
 }

@@ -4,19 +4,17 @@ import android.os.Parcel
 import android.os.Parcelable
 import company.surious.mediator_domain.entities.interfaces.Nameable
 import company.surious.mediator_domain.entities.interfaces.UpdatableEntity
-import company.surious.mediator_domain.entities.utils.EqualsUtils
 import company.surious.mediator_domain.entities.utils.UpdatableEntityUtils
-import company.surious.mediator_domain.entities.utils.updateInnerObject
 
 class Specialization(
     override var id: Long = -1,
     override var name: String = "",
     override var nameRu: String? = null,
     override var nameUa: String? = null,
+    var parentSpecializationId: Long = -1,
     var description: String = "",
     var descriptionRu: String = "",
-    var descriptionUa: String = "",
-    var parentSpecialization: Specialization? = null
+    var descriptionUa: String = ""
 
 ) : UpdatableEntity<Specialization>, Nameable, Parcelable {
 
@@ -28,12 +26,7 @@ class Specialization(
                 || description != anotherVersion.description
                 || descriptionRu != anotherVersion.descriptionRu
                 || descriptionUa != anotherVersion.descriptionUa
-                ||
-                !EqualsUtils.nullEquals(
-                    parentSpecialization,
-                    anotherVersion.parentSpecialization
-                )
-                || parentSpecialization?.isChanged(anotherVersion.parentSpecialization!!) ?: false
+                || parentSpecializationId != anotherVersion.parentSpecializationId
     }
 
     override fun update(anotherVersion: Specialization) {
@@ -44,12 +37,7 @@ class Specialization(
         description = anotherVersion.description
         descriptionRu = anotherVersion.descriptionRu
         descriptionUa = anotherVersion.descriptionUa
-        updateInnerObject(
-            anotherVersion.parentSpecialization,
-            parentSpecialization,
-            { parentSpecialization = null },
-            { parentSpecialization = anotherVersion.parentSpecialization }
-        )
+        parentSpecializationId = anotherVersion.parentSpecializationId
     }
 
     override fun equals(other: Any?): Boolean {
@@ -68,10 +56,10 @@ class Specialization(
         source.readString()!!,
         source.readString()!!,
         source.readString()!!,
+        source.readLong(),
         source.readString()!!,
         source.readString()!!,
-        source.readString()!!,
-        source.readParcelable<Specialization>(Specialization::class.java.classLoader)
+        source.readString()!!
     )
 
     override fun describeContents() = 0
@@ -81,10 +69,10 @@ class Specialization(
         writeString(name)
         writeString(nameRu)
         writeString(nameUa)
+        writeLong(parentSpecializationId)
         writeString(description)
         writeString(descriptionRu)
         writeString(descriptionUa)
-        writeParcelable(parentSpecialization, 0)
     }
 
     companion object {
