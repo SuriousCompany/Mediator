@@ -1,36 +1,24 @@
-package company.surious.mediator_domain.entities.users.doctors
+package company.surious.mediator_data.repositories.specializations
 
 import android.os.Parcel
 import android.os.Parcelable
 import company.surious.mediator_domain.entities.interfaces.Nameable
 import company.surious.mediator_domain.entities.interfaces.UpdatableEntity
 import company.surious.mediator_domain.entities.utils.UpdatableEntityUtils
-import company.surious.mediator_domain.entities.utils.isInnerObjectChanged
-import company.surious.mediator_domain.entities.utils.updateInnerObject
 
-class Specialization(
+class SpecializationNetworkModel(
     override var id: Long = -1,
     override var name: String = "",
     override var nameRu: String? = null,
     override var nameUa: String? = null,
-    var parentSpecialization: Specialization? = null,
+    var parentSpecializationId: Long = -1,
     var description: String = "",
     var descriptionRu: String = "",
     var descriptionUa: String = ""
-) : UpdatableEntity<Specialization>, Nameable, Parcelable {
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-        other as Specialization
-        return id == other.id
-    }
+) : UpdatableEntity<SpecializationNetworkModel>, Nameable, Parcelable {
 
-    override fun hashCode(): Int {
-        return id.hashCode()
-    }
-
-    override fun isChanged(anotherVersion: Specialization): Boolean {
+    override fun isChanged(anotherVersion: SpecializationNetworkModel): Boolean {
         UpdatableEntityUtils.checkSameEntity(this, anotherVersion.id)
         return name != anotherVersion.name
                 || nameRu != anotherVersion.nameRu
@@ -38,10 +26,10 @@ class Specialization(
                 || description != anotherVersion.description
                 || descriptionRu != anotherVersion.descriptionRu
                 || descriptionUa != anotherVersion.descriptionUa
-                || isInnerObjectChanged(anotherVersion.parentSpecialization, parentSpecialization)
+                || parentSpecializationId != anotherVersion.parentSpecializationId
     }
 
-    override fun update(anotherVersion: Specialization) {
+    override fun update(anotherVersion: SpecializationNetworkModel) {
         UpdatableEntityUtils.checkSameEntity(this, anotherVersion.id)
         name = anotherVersion.name
         nameRu = anotherVersion.nameRu
@@ -49,20 +37,26 @@ class Specialization(
         description = anotherVersion.description
         descriptionRu = anotherVersion.descriptionRu
         descriptionUa = anotherVersion.descriptionUa
-        updateInnerObject(
-            anotherVersion.parentSpecialization,
-            parentSpecialization,
-            { parentSpecialization = null },
-            { parentSpecialization = anotherVersion.parentSpecialization }
-        )
+        parentSpecializationId = anotherVersion.parentSpecializationId
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        other as SpecializationNetworkModel
+        return id == other.id
+    }
+
+    override fun hashCode(): Int {
+        return id.hashCode()
     }
 
     constructor(source: Parcel) : this(
         source.readLong(),
         source.readString()!!,
-        source.readString(),
-        source.readString(),
-        source.readParcelable<Specialization>(Specialization::class.java.classLoader),
+        source.readString()!!,
+        source.readString()!!,
+        source.readLong(),
         source.readString()!!,
         source.readString()!!,
         source.readString()!!
@@ -75,21 +69,20 @@ class Specialization(
         writeString(name)
         writeString(nameRu)
         writeString(nameUa)
-        writeParcelable(parentSpecialization, 0)
+        writeLong(parentSpecializationId)
         writeString(description)
         writeString(descriptionRu)
         writeString(descriptionUa)
     }
 
     companion object {
-
         @JvmField
-        val CREATOR: Parcelable.Creator<Specialization> =
-            object : Parcelable.Creator<Specialization> {
-                override fun createFromParcel(source: Parcel): Specialization =
-                    Specialization(source)
+        val CREATOR: Parcelable.Creator<SpecializationNetworkModel> =
+            object : Parcelable.Creator<SpecializationNetworkModel> {
+                override fun createFromParcel(source: Parcel): SpecializationNetworkModel =
+                    SpecializationNetworkModel(source)
 
-                override fun newArray(size: Int): Array<Specialization?> =
+                override fun newArray(size: Int): Array<SpecializationNetworkModel?> =
                     arrayOfNulls(size)
             }
     }

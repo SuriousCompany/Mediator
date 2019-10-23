@@ -5,5 +5,8 @@ import company.surious.mediator_domain.entities.users.doctors.Specialization
 import io.reactivex.Observable
 
 interface SpecializationsRepository {
-    fun observeSpecializations(language: Language): Observable<List<Specialization>>
+    fun observeSpecializations(
+        language: Language,
+        excludeParentModels: Boolean
+    ): Observable<List<Specialization>>
 }

@@ -8,10 +8,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
 import company.surious.mediator_domain.Language
 import company.surious.mediator_domain.entities.interfaces.Nameable
-import company.surious.mediator_domain.entities.users.doctors.Specialization
 import company.surious.mediator_presentation.R
 import company.surious.mediator_presentation.databinding.ActivityHospitalDoctorSignUpBinding
 import company.surious.mediator_presentation.ui.components.activities.specializations.SelectSpecializationsActivity
+import company.surious.mediator_presentation.ui.components.activities.specializations.SelectableSpecialization
 
 class HospitalDoctorSignUpActivity : AppCompatActivity() {
     private companion object {
@@ -35,14 +35,14 @@ class HospitalDoctorSignUpActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == SELECT_SPECIALIZATIONS_CODE && resultCode == Activity.RESULT_OK) {
             data?.let {
-                val selectedSpecializations: List<Specialization> =
+                val selectedSpecializations: List<SelectableSpecialization> =
                     it.getParcelableArrayListExtra(SelectSpecializationsActivity.SELECTED_SPECIALIZATIONS_KEY)
                 selectedSpecializationsText.set(getSpecializationsText(selectedSpecializations))
             }
         }
     }
 
-    private fun getSpecializationsText(specializations: List<Specialization>): String {
+    private fun getSpecializationsText(specializations: List<SelectableSpecialization>): String {
         val builder = StringBuilder()
         specializations.forEachIndexed { index, specialization ->
             builder.append(getNameInLanguage(specialization, Language.RU))

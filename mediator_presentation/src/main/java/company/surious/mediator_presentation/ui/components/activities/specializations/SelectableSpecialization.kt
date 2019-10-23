@@ -4,7 +4,6 @@ import android.os.Parcel
 import android.os.Parcelable
 import company.surious.mediator_domain.entities.interfaces.Nameable
 import company.surious.mediator_domain.entities.interfaces.UpdatableEntity
-import company.surious.mediator_domain.entities.users.doctors.Specialization
 import company.surious.mediator_domain.entities.utils.UpdatableEntityUtils
 import company.surious.mediator_domain.entities.utils.isInnerObjectChanged
 import company.surious.mediator_domain.entities.utils.updateInnerObject
@@ -73,6 +72,18 @@ class SelectableSpecialization(
         1 == source.readInt()
     )
 
+    fun getFormattedName(): String =
+        if (parentSpecialization == null) {
+            nameRu!!
+        } else {
+            val parentName = parentSpecialization!!.nameRu!!
+            if (nameRu!!.toLowerCase().contains(parentName.toLowerCase())) {
+                nameRu!!
+            } else {
+                "$parentName - $nameRu"
+            }
+        }
+
     override fun describeContents() = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
@@ -88,26 +99,6 @@ class SelectableSpecialization(
     }
 
     companion object {
-
-        fun fromSpecialization(
-            specialization: Specialization,
-            mappedParentSpecialization: Specialization? = null
-        ): SelectableSpecialization =
-            SelectableSpecialization().apply {
-                id = specialization.id
-                name = specialization.name
-                nameRu = specialization.nameRu
-                nameUa = specialization.nameUa
-                parentSpecialization =
-                    if (mappedParentSpecialization != null) {
-                        fromSpecialization(mappedParentSpecialization, null)
-                    } else {
-                        null
-                    }
-                description = specialization.description
-                descriptionRu = specialization.descriptionRu
-                descriptionUa = specialization.descriptionUa
-            }
 
         @JvmField
         val CREATOR: Parcelable.Creator<SelectableSpecialization> =

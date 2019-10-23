@@ -4,8 +4,8 @@ import android.content.Context
 import com.google.firebase.firestore.FirebaseFirestore
 import company.surious.mediator_data.FirebaseAuthManager
 import company.surious.mediator_data.FirestoreRegistrationManager
-import company.surious.mediator_data.repositories.FirestoreSpecializationsRepository
 import company.surious.mediator_data.repositories.FirestoreUsersRepository
+import company.surious.mediator_data.repositories.specializations.FirestoreSpecializationsRepository
 import company.surious.mediator_domain.managers.AuthManager
 import company.surious.mediator_domain.managers.RegistrationManager
 import company.surious.mediator_domain.repositories.SpecializationsRepository
@@ -42,5 +42,7 @@ object DataManagersModule {
     @Singleton
     @JvmStatic
     fun provideSpecializationsRepository(firebaseFirestore: FirebaseFirestore): SpecializationsRepository =
-        FirestoreSpecializationsRepository(firebaseFirestore)
+        FirestoreSpecializationsRepository(
+            firebaseFirestore
+        )
 }

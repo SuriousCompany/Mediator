@@ -6,7 +6,6 @@ import company.surious.mediator_data.indexes.RegistrationRequestType
 import company.surious.mediator_domain.Logger
 import company.surious.mediator_domain.entities.registration.DoctorRegistrationRequest
 import company.surious.mediator_domain.entities.registration.HospitalRegistrationRequest
-import company.surious.mediator_domain.entities.users.doctors.Specialization
 import company.surious.mediator_domain.managers.RegistrationManager
 import io.reactivex.Completable
 import javax.inject.Inject
@@ -84,8 +83,4 @@ class FirestoreRegistrationManager @Inject constructor(private var firebaseFires
                 }
             }
         }
-
-    override fun registerSpecification(specialization: Specialization): Completable {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 }

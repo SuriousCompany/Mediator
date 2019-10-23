@@ -1,4 +1,4 @@
-package company.surious.mediator_data.repositories
+package company.surious.mediator_data.repositories.specializations
 
 import com.google.firebase.firestore.FirebaseFirestore
 import company.surious.mediator_data.References
@@ -11,7 +11,10 @@ import javax.inject.Inject
 class FirestoreSpecializationsRepository @Inject constructor(private val firebaseFirestore: FirebaseFirestore) :
     SpecializationsRepository {
 
-    override fun observeSpecializations(language: Language): Observable<List<Specialization>> =
+    override fun observeSpecializations(
+        language: Language,
+        excludeParentModels: Boolean
+    ): Observable<List<Specialization>> =
         Observable.create { emitter ->
             val specializationsReference =
                 firebaseFirestore.collection(References.SPECIALIZATIONS)
@@ -19,10 +22,15 @@ class FirestoreSpecializationsRepository @Inject constructor(private val firebas
             specializationsReference.addSnapshotListener { snapshot, exception ->
                 if (exception == null) {
                     if (snapshot != null) {
-                        val res =
-                            snapshot.documents.map { it.toObject(Specialization::class.java)!! }
+                        val networkModels =
+                            snapshot.documents.map { it.toObject(SpecializationNetworkModel::class.java)!! }
+                        val specializations =
+                            SpecializationNetworkModel.mapToSpecializations(
+                                networkModels,
+                                excludeParentModels
+                            )
                         if (!emitter.isDisposed) {
-                            emitter.onNext(res)
+                            emitter.onNext(specializations)
                         }
                     }
                 } else {

@@ -124,7 +124,7 @@ class SignInButtonViewModel @Inject constructor(
     )
 
     private fun generateSpecialization() =
-        Specialization(
+        SpecializationNetworkModel(
             System.currentTimeMillis(),
             "Ass doctor",
             "Проктолог",
