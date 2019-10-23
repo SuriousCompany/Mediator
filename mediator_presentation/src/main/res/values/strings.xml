@@ -8,4 +8,8 @@
     <string name="i_work_in_a_state_hospital">I work in a state hospital</string>
     <string name="i_work_as_a_self_employed_doctor">I work as a self employed doctor</string>
     <string name="specializations">Specializations:%s</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="loading">Loading…</string>
 </resources>

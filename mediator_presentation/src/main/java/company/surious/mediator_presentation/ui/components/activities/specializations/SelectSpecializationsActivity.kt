@@ -10,6 +10,7 @@ import company.surious.mediator_domain.entities.users.doctors.Specialization
 import company.surious.mediator_presentation.R
 import company.surious.mediator_presentation.databinding.ActivitySelectSpecializationsBinding
 import company.surious.mediator_presentation.ui.base.ViewModelFactory
+import company.surious.mediator_presentation.ui.utils.extensions.DialogUtils
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
@@ -23,7 +24,7 @@ class SelectSpecializationsActivity : DaggerAppCompatActivity() {
 
     private val selectedSpecializations = ArrayList<Specialization>()
     private lateinit var specializationsAdapter: SelectableSpecializationsAdapter
-
+    private lateinit var dialogUtils: DialogUtils
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,13 +33,23 @@ class SelectSpecializationsActivity : DaggerAppCompatActivity() {
             R.layout.activity_select_specializations
         )
         initAdapter()
+        initDataBinding(binding)
+        initViewModel()
+        dialogUtils = DialogUtils(supportFragmentManager)
+        dialogUtils.showLoadingDialog()
+    }
+
+    private fun initViewModel() {
+        val viewModel =
+            ViewModelProviders.of(this, viewModelFactory)[SpecializationsListViewModel::class.java]
+        viewModel.updateSpecializationsFunction = ::updateSpecializations
+    }
+
+    private fun initDataBinding(binding: ActivitySelectSpecializationsBinding) {
         binding.lifecycleOwner = this
         binding.specializationsRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.specializationsRecyclerView.adapter = specializationsAdapter
         binding.eventsHandler = SelectSpecializationsActivityEventsHandler()
-        val viewModel =
-            ViewModelProviders.of(this, viewModelFactory)[SpecializationsListViewModel::class.java]
-        viewModel.updateSpecializationsFunction = ::updateSpecializations
     }
 
     private fun initAdapter() {
@@ -56,6 +67,7 @@ class SelectSpecializationsActivity : DaggerAppCompatActivity() {
     }
 
     private fun updateSpecializations(specializations: List<Specialization>) {
+        dialogUtils.hideLoadingDialog()
         selectedSpecializations.clear()
         specializationsAdapter.setAll(specializations.map { SelectableSpecialization(it) })
     }
