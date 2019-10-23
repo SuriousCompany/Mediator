@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import company.surious.mediator_domain.entities.users.doctors.Specialization
 import company.surious.mediator_presentation.R
 import company.surious.mediator_presentation.databinding.ActivitySelectSpecializationsBinding
 import company.surious.mediator_presentation.ui.base.ViewModelFactory
@@ -22,7 +21,7 @@ class SelectSpecializationsActivity : DaggerAppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    private val selectedSpecializations = ArrayList<Specialization>()
+    private val selectedSpecializations = ArrayList<SelectableSpecialization>()
     private lateinit var specializationsAdapter: SelectableSpecializationsAdapter
     private lateinit var dialogUtils: DialogUtils
 
@@ -58,18 +57,24 @@ class SelectSpecializationsActivity : DaggerAppCompatActivity() {
         specializationsAdapter.onUnSelectedListener = ::onSpecializationUnSelected
     }
 
-    private fun onSpecializationSelected(specialization: Specialization) {
+    private fun onSpecializationSelected(specialization: SelectableSpecialization) {
         selectedSpecializations.add(specialization)
     }
 
-    private fun onSpecializationUnSelected(specialization: Specialization) {
+    private fun onSpecializationUnSelected(specialization: SelectableSpecialization) {
         selectedSpecializations.remove(specialization)
     }
 
-    private fun updateSpecializations(specializations: List<Specialization>) {
+    private fun updateSpecializations(specializations: List<SelectableSpecialization>) {
         dialogUtils.hideLoadingDialog()
         selectedSpecializations.clear()
-        specializationsAdapter.setAll(specializations.map { SelectableSpecialization(it) })
+        specializationsAdapter.setAll(specializations.sortedWith(Comparator { o1, o2 ->
+            run {
+                val o1NameStart: String = (o1.parentSpecialization?.nameRu ?: "") + o1.nameRu
+                val o2NameStart: String = (o2.parentSpecialization?.nameRu ?: "") + o2.nameRu
+                o1NameStart.compareTo(o2NameStart, true)
+            }
+        }))
     }
 
     inner class SelectSpecializationsActivityEventsHandler {
