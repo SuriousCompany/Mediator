@@ -1,15 +1,16 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme.NoToolbar" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorBlack</item>
     </style>
 
-    <style name="AppTheme.NoToolbar" parent="Theme.AppCompat.DayNight.NoActionBar">
-
+    <style name="DoneFab" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="android:src">@drawable/ic_check_red_24dp</item>
+        <item name="borderWidth">0dp</item>
+        <item name="android:tint">@color/colorBlack</item>
+        <item name="backgroundTint">@color/colorGreen</item>
     </style>
-
 </resources>

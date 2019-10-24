@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
+import company.surious.mediator_domain.entities.utils.IdentifiableUtils
 import company.surious.mediator_domain.entities.utils.setAll
 import company.surious.mediator_presentation.databinding.ItemSpecializationBinding
 
@@ -25,6 +26,15 @@ class SelectableSpecializationsAdapter :
             onSelectedListener?.invoke(specialization)
         }
         notifyItemChanged(specializationsFiltered.indexOf(specialization))
+    }
+
+    fun unSelectSpecialization(id: Long) {
+        IdentifiableUtils.getById(id, specializations)?.let {
+            if (it.selected) {
+                it.selected = false
+                notifyItemChanged(specializationsFiltered.indexOf(it))
+            }
+        }
     }
 
     fun setAll(items: List<SelectableSpecialization>) {

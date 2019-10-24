@@ -15,25 +15,36 @@
         android:layout_height="match_parent"
         tools:context=".ui.components.activities.specializations.SelectSpecializationsActivity">
 
+        <TextView
+            android:id="@+id/select_specialization_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/select_your_specializations"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/selectedSpecializationsChipGroup"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/select_specialization_text_view" />
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/specializationsSearchView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:focusable="true"
             android:onClick="@{()->eventsHandler.onSearchViewClicked()}"
+            android:paddingTop="16dp"
             app:iconifiedByDefault="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,8 +55,10 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:overScrollMode="never"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,6 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:onClick="@{()->eventsHandler.onSelectedFabClicked()}"
+            style="@style/DoneFab"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

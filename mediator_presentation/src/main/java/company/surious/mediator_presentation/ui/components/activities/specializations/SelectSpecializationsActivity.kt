@@ -5,10 +5,13 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.chip.Chip
 import company.surious.mediator_presentation.R
 import company.surious.mediator_presentation.databinding.ActivitySelectSpecializationsBinding
 import company.surious.mediator_presentation.ui.base.ViewModelFactory
@@ -85,10 +88,38 @@ class SelectSpecializationsActivity : DaggerAppCompatActivity() {
 
     private fun onSpecializationSelected(specialization: SelectableSpecialization) {
         selectedSpecializations.add(specialization)
+        addChip(specialization)
+    }
+
+    private fun addChip(specialization: SelectableSpecialization) {
+        val chipView = LayoutInflater.from(this)
+            .inflate(
+                R.layout.chip_specialization_selectable,
+                selectedSpecializationsChipGroup,
+                false
+            ) as Chip
+        with(chipView) {
+            text = specialization.getFormattedName()
+            tag = specialization.id.toString()
+            setOnClickListener {
+                onSpecializationUnSelected(specialization)
+            }
+            setOnCloseIconClickListener {
+                onSpecializationUnSelected(specialization)
+            }
+        }
+
+        selectedSpecializationsChipGroup.addView(chipView)
     }
 
     private fun onSpecializationUnSelected(specialization: SelectableSpecialization) {
         selectedSpecializations.remove(specialization)
+        selectedSpecializationsChipGroup.removeView(
+            selectedSpecializationsChipGroup.findViewWithTag<View>(
+                specialization.id.toString()
+            )
+        )
+        specializationsAdapter.unSelectSpecialization(specialization.id)
     }
 
     private fun updateSpecializations(specializations: List<SelectableSpecialization>) {
