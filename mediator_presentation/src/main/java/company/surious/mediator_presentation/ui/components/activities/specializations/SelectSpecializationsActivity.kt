@@ -46,19 +46,22 @@ class SelectSpecializationsActivity : DaggerAppCompatActivity() {
 
     private fun initSearchView() {
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        specializationsSearchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-        specializationsSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                specializationsAdapter.filter.filter(query)
-                return false
-            }
+        with(specializationsSearchView) {
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+            isSubmitButtonEnabled = false
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    specializationsAdapter.filter.filter(query)
+                    return false
+                }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                specializationsAdapter.filter.filter(newText)
-                return false
-            }
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    specializationsAdapter.filter.filter(newText)
+                    return false
+                }
 
-        })
+            })
+        }
     }
 
     private fun initViewModel() {
@@ -111,6 +114,10 @@ class SelectSpecializationsActivity : DaggerAppCompatActivity() {
                     )
                 })
             finish()
+        }
+
+        fun onSearchViewClicked() {
+            specializationsSearchView.isIconified = false
         }
     }
 }

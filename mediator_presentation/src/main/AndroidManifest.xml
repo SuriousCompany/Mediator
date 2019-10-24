@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoToolbar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.components.activities.specializations.SelectSpecializationsActivity"></activity>
+        <activity
+            android:name=".ui.components.activities.specializations.SelectSpecializationsActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.components.activities.registration.hospital_doctor.HospitalDoctorSignUpActivity"
             android:screenOrientation="portrait" />
