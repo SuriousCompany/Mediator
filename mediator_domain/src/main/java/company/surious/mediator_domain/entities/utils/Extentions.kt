@@ -26,6 +26,7 @@ fun <T> MutableCollection<T>.setAll(anotherVersionList: Collection<T>) {
 }
 
 fun <T> ArrayList<T>.setAll(anotherVersionList: Collection<T>) {
+    val copy = ArrayList(anotherVersionList)
     clear()
-    addAll(ArrayList(anotherVersionList))
+    addAll(copy)
 }

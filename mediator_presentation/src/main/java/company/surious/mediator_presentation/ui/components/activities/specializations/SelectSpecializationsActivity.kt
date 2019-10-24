@@ -1,8 +1,11 @@
 package company.surious.mediator_presentation.ui.components.activities.specializations
 
 import android.app.Activity
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,7 +14,9 @@ import company.surious.mediator_presentation.databinding.ActivitySelectSpecializ
 import company.surious.mediator_presentation.ui.base.ViewModelFactory
 import company.surious.mediator_presentation.ui.utils.extensions.DialogUtils
 import dagger.android.support.DaggerAppCompatActivity
+import kotlinx.android.synthetic.main.activity_select_specializations.*
 import javax.inject.Inject
+
 
 class SelectSpecializationsActivity : DaggerAppCompatActivity() {
     companion object {
@@ -36,6 +41,24 @@ class SelectSpecializationsActivity : DaggerAppCompatActivity() {
         initViewModel()
         dialogUtils = DialogUtils(supportFragmentManager)
         dialogUtils.showLoadingDialog()
+        initSearchView()
+    }
+
+    private fun initSearchView() {
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        specializationsSearchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        specializationsSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                specializationsAdapter.filter.filter(query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                specializationsAdapter.filter.filter(newText)
+                return false
+            }
+
+        })
     }
 
     private fun initViewModel() {

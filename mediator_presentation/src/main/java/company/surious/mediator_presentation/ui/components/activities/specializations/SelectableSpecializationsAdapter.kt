@@ -2,16 +2,19 @@ package company.surious.mediator_presentation.ui.components.activities.specializ
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import company.surious.mediator_domain.entities.utils.setAll
 import company.surious.mediator_presentation.databinding.ItemSpecializationBinding
 
 class SelectableSpecializationsAdapter :
-    RecyclerView.Adapter<SelectableSpecializationViewHolder>() {
+    RecyclerView.Adapter<SelectableSpecializationViewHolder>(), Filterable {
 
     var onSelectedListener: ((SelectableSpecialization) -> Unit)? = null
     var onUnSelectedListener: ((SelectableSpecialization) -> Unit)? = null
     private val specializations = ArrayList<SelectableSpecialization>()
+    private val specializationsFiltered = ArrayList<SelectableSpecialization>()
 
     private val onClickListener: ((SelectableSpecialization) -> Unit) = { specialization ->
         if (specialization.selected) {
@@ -21,11 +24,12 @@ class SelectableSpecializationsAdapter :
             specialization.selected = true
             onSelectedListener?.invoke(specialization)
         }
-        notifyItemChanged(specializations.indexOf(specialization))
+        notifyItemChanged(specializationsFiltered.indexOf(specialization))
     }
 
     fun setAll(items: List<SelectableSpecialization>) {
         specializations.setAll(items)
+        specializationsFiltered.setAll(items)
         notifyDataSetChanged()
     }
 
@@ -37,10 +41,36 @@ class SelectableSpecializationsAdapter :
             ItemSpecializationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
 
-    override fun getItemCount(): Int = specializations.size
+    override fun getItemCount(): Int = specializationsFiltered.size
 
     override fun onBindViewHolder(holder: SelectableSpecializationViewHolder, position: Int) {
-        holder.bind(specializations[holder.adapterPosition], onClickListener)
+        holder.bind(specializationsFiltered[position], onClickListener)
+    }
+
+    override fun getFilter(): Filter = object : Filter() {
+
+        override fun performFiltering(constraint: CharSequence?): FilterResults {
+            if (constraint == null || constraint.isBlank()) {
+                specializationsFiltered.setAll(specializations)
+            } else {
+                specializationsFiltered.setAll(
+                    specializations.filter {
+                        it.getFormattedName().contains(constraint.trim().toString(), true)
+                    }
+                )
+            }
+            return FilterResults().apply { values = specializationsFiltered }
+        }
+
+        @Suppress("UNCHECKED_CAST")
+        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+            results?.let {
+                val values = it.values
+                values as ArrayList<SelectableSpecialization>
+                specializationsFiltered.setAll(values)
+                notifyDataSetChanged()
+            }
+        }
     }
 
 }
