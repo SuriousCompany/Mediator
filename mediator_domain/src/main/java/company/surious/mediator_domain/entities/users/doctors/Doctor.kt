@@ -38,6 +38,7 @@ class Doctor(
     val workExperience: ArrayList<WorkExperience> = ArrayList(),
     var type: DoctorType = DoctorType.SELF_EMPLOYED,
     var rating: Float? = 0f,
+    var workWithChildren: Boolean = false,
     var hospital: Hospital? = null,
     var patientsReceptionSite: PatientsReceptionSite? = null,
     var educationRu: String? = null,
@@ -89,6 +90,7 @@ class Doctor(
                 )
                 || type != anotherVersion.type
                 || rating != anotherVersion.rating
+                || workWithChildren != anotherVersion.workWithChildren
                 || isInnerObjectChanged(anotherVersion.hospital, hospital)
                 || isInnerObjectChanged(anotherVersion.patientsReceptionSite, patientsReceptionSite)
                 || familyNameRu != anotherVersion.familyNameRu
@@ -125,6 +127,7 @@ class Doctor(
         workExperience.setAll(anotherVersion.workExperience)
         type = anotherVersion.type
         rating = anotherVersion.rating
+        workWithChildren = anotherVersion.workWithChildren
         updateInnerObject(
             anotherVersion.hospital,
             hospital,
@@ -190,6 +193,7 @@ class Doctor(
         source.createTypedArrayList(WorkExperience.CREATOR)!!,
         DoctorType.values()[source.readInt()],
         source.readValue(Float::class.java.classLoader) as Float?,
+        1 == source.readInt(),
         source.readParcelable<Hospital>(Hospital::class.java.classLoader),
         source.readParcelable<PatientsReceptionSite>(PatientsReceptionSite::class.java.classLoader),
         source.readString(),
@@ -229,6 +233,7 @@ class Doctor(
         writeTypedList(workExperience)
         writeInt(type.ordinal)
         writeValue(rating)
+        writeInt((if (workWithChildren) 1 else 0))
         writeParcelable(hospital, 0)
         writeParcelable(patientsReceptionSite, 0)
         writeString(educationRu)

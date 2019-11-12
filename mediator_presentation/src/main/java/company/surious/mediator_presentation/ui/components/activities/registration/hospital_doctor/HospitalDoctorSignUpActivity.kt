@@ -12,6 +12,7 @@ import company.surious.mediator_presentation.R
 import company.surious.mediator_presentation.databinding.ActivityHospitalDoctorSignUpBinding
 import company.surious.mediator_presentation.ui.components.activities.specializations.SelectSpecializationsActivity
 import company.surious.mediator_presentation.ui.components.activities.specializations.SelectableSpecialization
+import company.surious.mediator_presentation.ui.components.activities.work_experience.WorkExperienceActivity
 
 class HospitalDoctorSignUpActivity : AppCompatActivity() {
     private companion object {
@@ -72,6 +73,14 @@ class HospitalDoctorSignUpActivity : AppCompatActivity() {
                     this@HospitalDoctorSignUpActivity,
                     SelectSpecializationsActivity::class.java
                 ), SELECT_SPECIALIZATIONS_CODE
+            )
+
+        fun onSelectWorkExperienceButtonClicked() =
+            startActivity(
+                Intent(
+                    this@HospitalDoctorSignUpActivity,
+                    WorkExperienceActivity::class.java
+                )
             )
     }
 

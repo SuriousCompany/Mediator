@@ -7,9 +7,3 @@ import com.google.android.gms.common.SignInButton
 fun bindSignInOnClick(button: SignInButton, method: () -> Unit) {
     button.setOnClickListener { method.invoke() }
 }
-
-/*@BindingAdapter("android:onClick")
-fun bindSearchOnClick(search: SearchView, method: () -> Unit) {
-    search.isClickable = true
-    search.setOnClickListener { method.invoke() }
-}*/

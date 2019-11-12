@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/work_experience_graph"
+    app:startDestination="@id/workExperiencesListFragment">
+
+    <fragment
+        android:id="@+id/editWorkExperienceFragment"
+        android:name="company.surious.mediator_presentation.ui.components.activities.work_experience.EditWorkExperienceFragment"
+        android:label="fragment_edit_work_experience"
+        tools:layout="@layout/fragment_edit_work_experience">
+        <action
+            android:id="@+id/action_editWorkExperienceFragment_to_workExperiencesListFragment"
+            app:destination="@id/workExperiencesListFragment"
+            app:popUpTo="@id/workExperiencesListFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/workExperiencesListFragment"
+        android:name="company.surious.mediator_presentation.ui.components.activities.work_experience.WorkExperiencesListFragment"
+        android:label="fragment_work_experiences_list"
+        tools:layout="@layout/fragment_work_experiences_list">
+        <action
+            android:id="@+id/action_workExperiencesListFragment_to_editWorkExperienceFragment"
+            app:destination="@id/editWorkExperienceFragment" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_workExperiencesListFragment"
+        app:destination="@id/workExperiencesListFragment" />
+</navigation>
