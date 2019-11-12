@@ -9,11 +9,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import company.surious.mediator_device.Logger
+import company.surious.mediator_domain.entities.users.current_user.CurrentUserStatus
+import company.surious.mediator_domain.managers.PreferencesManager
 import company.surious.mediator_presentation.R
 import company.surious.mediator_presentation.databinding.ActivityMainBinding
 import company.surious.mediator_presentation.ui.base.ViewModelFactory
 import company.surious.mediator_presentation.ui.components.activities.registration.DoctorSignUpActivity
 import company.surious.mediator_presentation.ui.components.activities.registration.PatientSignUpActivity
+import company.surious.mediator_presentation.ui.components.activities.registration.RegistrationActivity
 import company.surious.mediator_presentation.ui.components.view_models.SignInButtonViewModel
 import company.surious.mediator_presentation.ui.utils.extensions.showNotImplementedToast
 import dagger.android.support.DaggerAppCompatActivity
@@ -27,17 +30,26 @@ class MainActivity : DaggerAppCompatActivity() {
     }
 
     @Inject
+    lateinit var preferencesManager: PreferencesManager
+    @Inject
     lateinit var viewModelFactory: ViewModelFactory
     lateinit var signInButtonViewModel: SignInButtonViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initViewModels()
-        val binding: ActivityMainBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.lifecycleOwner = this
-        binding.eventsHandler = MainActivityViewEventsHandler()
+        val currentUser = preferencesManager.currentUser
+        if (currentUser != null && currentUser.currentUserStatus == CurrentUserStatus.REGISTERED) {
+            initViewModels()
+            val binding: ActivityMainBinding =
+                DataBindingUtil.setContentView(this, R.layout.activity_main)
+            binding.lifecycleOwner = this
+            binding.eventsHandler = MainActivityViewEventsHandler()
+        } else {
+            startActivity(Intent(this, RegistrationActivity::class.java))
+            finish()
+        }
     }
+
 
     private fun initViewModels() {
         signInButtonViewModel =

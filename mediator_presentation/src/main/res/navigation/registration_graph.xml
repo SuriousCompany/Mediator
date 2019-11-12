@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/registration_graph"
+    app:startDestination="@id/signInFragment">
+
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="company.surious.mediator_presentation.ui.components.activities.registration.RegistrationFragment"
+        android:label="fragment_registration"
+        tools:layout="@layout/fragment_registration" />
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="company.surious.mediator_presentation.ui.components.activities.registration.sign_in.SignInFragment"
+        android:label="SignInFragment">
+        <action
+            android:id="@+id/action_signInFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment"
+
+            app:popUpTo="@+id/registrationFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

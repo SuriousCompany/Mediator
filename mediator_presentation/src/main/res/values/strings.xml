@@ -15,4 +15,5 @@
     <string name="select_your_specializations">Select your specializations</string>
     <string name="fill_your_work_experience">Fill your work experience</string>
     <string name="fill_your_work_experience_history">Fill your work experience history</string>
+    <string name="blocked">Sorry, your account was blocked.</string>
 </resources>

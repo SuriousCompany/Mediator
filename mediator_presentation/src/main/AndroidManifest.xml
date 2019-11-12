@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoToolbar"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ui.components.activities.registration.RegistrationActivity"></activity>
         <activity
             android:name=".ui.components.activities.work_experience.WorkExperienceActivity"
             android:screenOrientation="portrait" />
